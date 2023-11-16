@@ -207,7 +207,7 @@
 			var isCorrect = true;
 			for (var i = 0; i < correctWord.length; i++) {
 				var spot = "spot" + i.toString()+"_"+guessIndex;
-				var letter = document.getElementById(spot).value;
+				var letter = document.getElementById(spot).value.toLowerCase();
 				var wrongSpot = false;
 				if (letter == correctWord[i]) {
 					document.getElementById(letter).style.backgroundColor = "green";
