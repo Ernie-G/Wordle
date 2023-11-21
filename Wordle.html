@@ -8,20 +8,26 @@
   </head>
   
   <body>
-   <button id="myBtn">?</button>
-   <div id="myModal" class="modal">
-	   <div class="modal-content">
-		   <span class="close">&times;</span>
-		   <h1>How To Play</h1>
-		   <h3>Guess the CS-related word in 6 tries.</h3>
-		   <ul>
-			<li>Each guess must be a 5-letter word.</li>
-			<li>The color of the tiles will change to show how close your guess was to the word.</li>
-			<li>An orange tile indicates the letter is in the word but not in the correct spot.</li>
-			<li>A green tile indicates the letter is in the word and in the correct spot.</li>
-		</ul>
-	   </div>
-   </div>
+	  <div class="navbar">
+		  <button id="instructions">?</button>
+		  <div id="myModal" class="modal">
+			  <div class="modal-content">
+				  <span class="close">&times;</span>
+				  <h1>How To Play</h1>
+				  <h3>Guess the CS-related word in 6 tries.</h3>
+				  <ul>
+					  <li>Each guess must be a 5-letter word.</li>
+					  <li>The color of the tiles will change to show how close your guess was to the word.</li>
+					  <li>An orange tile indicates the letter is in the word but not in the correct spot.</li>
+					  <li>A green tile indicates the letter is in the word and in the correct spot.</li>
+				  </ul>
+			  </div>
+		  </div>
+		  <div id="wins">
+			  <div class="wins-number">0</div>
+			  <div class="wins-label">Wins</div>
+		  </div>
+	  </div>
 
  
    <h1>Guess the Word</h1>
@@ -158,7 +164,7 @@
     
 	<script>
         var modal = document.getElementById("myModal");
-        var btn = document.getElementById("myBtn");
+        var btn = document.getElementById("instructions");
         var span = document.getElementsByClassName("close")[0];
         btn.onclick = function () {
             modal.style.display = "block";
@@ -179,6 +185,7 @@
 		var revealWordBtn = document.querySelector("#revealWordButton");
 
         let tries = 6;
+	var gamesWon = 0;
         let guessIndex = 0; // Track the current guess location
         const correctWordArray = [
             'DEBUG', 'INPUT', 'LINUX', 'FLOAT', 'ASCII', 'STACK', 'PIXEL', 'SHELL',
@@ -234,6 +241,10 @@
 			if (!isCorrect) {
 				// If the word is incorrect, add a new guess location
 				addNewGuessLocation();
+			} else {
+				//if word is correct, increase wins by 1
+				gamesWon++;
+				updateWins();
 			}
 		}
         function addNewGuessLocation() {
@@ -299,6 +310,11 @@
 			letters.forEach(function (letter) {
 				letter.style.backgroundColor = "grey";
 			});
+		}
+
+		function updateWins() {
+			var winsContainer = document.querySelector(".navbar #wins");
+			winsContainer.innerHTML = `${gamesWon}<br>Wins`;
 		}
 
     </script>
