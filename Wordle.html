@@ -8,7 +8,7 @@
   </head>
   
   <body>
-   <div class="navbar">
+	<div class="navbar">
 		<button id="instructions">?</button>
 		<div id="instructionsModal" class="modal">
 			<div class="modal-content">
@@ -185,6 +185,7 @@
 		var revealWordBtn = document.querySelector("#revealWordButton");
 
         let tries = 6;
+	var gamesWon = 0;
         let guessIndex = 0; // Track the current guess location
         const correctWordArray = [
             'DEBUG', 'INPUT', 'LINUX', 'FLOAT', 'ASCII', 'STACK', 'PIXEL', 'SHELL',
@@ -310,6 +311,7 @@
 				letter.style.backgroundColor = "grey";
 			});
 		}
+		
 		function updateWins() {
     		var winsContainer = document.querySelector(".navbar #wins");
 			winsContainer.innerHTML = `${gamesWon}<br>Wins`;
