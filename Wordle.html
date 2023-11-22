@@ -2531,116 +2531,117 @@
 		"zonal",
 		]
 
-        var correctWord = getRandomWord();
-
-        checkWordBtn.addEventListener("click", function () {
-            checkWord();
-            updateTries();
-        });
-
-        resetTriesBtn.addEventListener("click", function () {
-            resetTries();
-        });
-
-        resetWordBtn.addEventListener("click", function () {
-            resetGame();
-        });
-		revealWordBtn.addEventListener("click", function () {
-            revealWord();
-        });
+	        var correctWord = getRandomWord();
+	
+	        checkWordBtn.addEventListener("click", function () {
+	            checkWord();
+	            updateTries();
+	        });
+	
+	        resetTriesBtn.addEventListener("click", function () {
+	            resetTries();
+	        });
+	
+	        resetWordBtn.addEventListener("click", function () {
+	            resetGame();
+	        });
+			revealWordBtn.addEventListener("click", function () {
+	            revealWord();
+	        });
 
 		
-	function isRealWord(){
-		var x = false;
-		var guessedWord = "";
-			for(var i = 0; i < correctWord.length; i ++){
-				var spot = "spot" + i.toString()+"_"+guessIndex;
-				guessedWord = guessedWord + document.getElementById(spot).value.toLowerCase();
-			}
-			for(var i = 0; i < WORDS.length; i ++){
-				if(WORDS[i] == (guessedWord)){
-					return true;
+		function isRealWord(){
+			var x = false;
+			var guessedWord = "";
+				for(var i = 0; i < correctWord.length; i ++){
+					var spot = "spot" + i.toString()+"_"+guessIndex;
+					guessedWord = guessedWord + document.getElementById(spot).value.toLowerCase();
 				}
-			}
-	}
-
-		
-	function checkWord() {
-		if(isRealWord()){
-		var isCorrect = true;
-		for (var i = 0; i < correctWord.length; i++) {
-			var spot = "spot" + i.toString()+"_"+guessIndex;
-			var letter = document.getElementById(spot).value.toLowerCase();
-			var wrongSpot = false;
-			if (letter == correctWord[i]) {
-				document.getElementById(letter).style.backgroundColor = "green";
-				document.getElementById(spot).style.backgroundColor = "green";
-			} else {
-				isCorrect = false;
-				for (var j = 0; j < correctWord.length; j++) {
-					if (letter == correctWord[j]) {
-						wrongSpot = true;
+				for(var i = 0; i < WORDS.length; i ++){
+					if(WORDS[i] == (guessedWord)){
+						return true;
 					}
 				}
-				if (wrongSpot == true) {
-					document.getElementById(letter).style.backgroundColor = "orange";
-					document.getElementById(spot).style.backgroundColor = "orange";
-					
+		}
+
+		
+		function checkWord() {
+			if(isRealWord()){
+				var isCorrect = true;
+				for (var i = 0; i < correctWord.length; i++) {
+					var spot = "spot" + i.toString()+"_"+guessIndex;
+					var letter = document.getElementById(spot).value.toLowerCase();
+					var wrongSpot = false;
+					if (letter == correctWord[i]) {
+						document.getElementById(letter).style.backgroundColor = "green";
+						document.getElementById(spot).style.backgroundColor = "green";
+					} else {
+						isCorrect = false;
+						for (var j = 0; j < correctWord.length; j++) {
+							if (letter == correctWord[j]) {
+								wrongSpot = true;
+							}
+						}
+						if (wrongSpot == true) {
+							document.getElementById(letter).style.backgroundColor = "orange";
+							document.getElementById(spot).style.backgroundColor = "orange";
+							
+						} else {
+							document.getElementById(letter).style.backgroundColor = "red";
+							document.getElementById(spot).style.backgroundColor = "red";
+						}
+					}
+				}
+				// Increment the guess index for the next guess location
+				guessIndex++;
+				if (!isCorrect) {
+					// If the word is incorrect, add a new guess location
+					addNewGuessLocation();
 				} else {
-					document.getElementById(letter).style.backgroundColor = "red";
-					document.getElementById(spot).style.backgroundColor = "red";
+					//if word is correct, increase wins by 1
+					gamesWon++;
+					updateWins();
 				}
 			}
 		}
-		// Increment the guess index for the next guess location
-		guessIndex++;
-		if (!isCorrect) {
-			// If the word is incorrect, add a new guess location
-			addNewGuessLocation();
-		} else {
-			//if word is correct, increase wins by 1
-			gamesWon++;
-			updateWins();
-		}
-	}
-        function addNewGuessLocation() {
-            // Create a new row for the guessed word input fields
-            var newRow = document.createElement("tr");
-
-            // Create input fields for the new guess location
-            for (var i = 0; i < correctWord.length; i++) {
-                var newInput = document.createElement("input");
-                newInput.className = "ng";
-                newInput.name = "guess[" + guessIndex + "]";
-                newInput.maxlength = "1";
-                newInput.size = "1";
-                newInput.id = "spot" + i + "_" + guessIndex; // Unique ID for each input
-                newRow.appendChild(document.createElement("td")).appendChild(newInput);
-            }
-
-            // Append the new row to the table body
-            document.querySelector("tbody").appendChild(newRow);
-
-        }
-
-        function getRandomWord() {
-            const randomIndex = Math.floor(Math.random() * correctWordArray.length);
-            var result = correctWordArray[randomIndex].toLowerCase();
-            return result;
-        }
-
-        function updateTries() {
-            tries--;
-            if (tries < 0) {
-                tries = 0;
-            }
-            attemptsRemaining.textContent = `${tries} attempts remaining.`;
-        };
-
-        function resetTries() {
-            tries = 6;
-            attemptsRemaining.textContent = `${tries} attempts remaining.`;
-        };
+	        function addNewGuessLocation() {
+	            // Create a new row for the guessed word input fields
+	            var newRow = document.createElement("tr");
+	
+	            // Create input fields for the new guess location
+	            for (var i = 0; i < correctWord.length; i++) {
+	                var newInput = document.createElement("input");
+	                newInput.className = "ng";
+	                newInput.name = "guess[" + guessIndex + "]";
+	                newInput.maxlength = "1";
+	                newInput.size = "1";
+	                newInput.id = "spot" + i + "_" + guessIndex; // Unique ID for each input
+	                newRow.appendChild(document.createElement("td")).appendChild(newInput);
+	            }
+	
+	            // Append the new row to the table body
+	            document.querySelector("tbody").appendChild(newRow);
+	
+	        }
+	
+	        function getRandomWord() {
+	            const randomIndex = Math.floor(Math.random() * correctWordArray.length);
+	            var result = correctWordArray[randomIndex].toLowerCase();
+	            return result;
+	        }
+	
+	        function updateTries() {
+	            tries--;
+	            if (tries < 0) {
+	                tries = 0;
+	            }
+	            attemptsRemaining.textContent = `${tries} attempts remaining.`;
+	        };
+	
+	        function resetTries() {
+	            tries = 6;
+	            attemptsRemaining.textContent = `${tries} attempts remaining.`;
+	        };
 
 
 		function resetGame() {
