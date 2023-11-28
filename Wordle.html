@@ -200,8 +200,12 @@
 	    var correctWord = getRandomWord();
 	
 	        checkWordBtn.addEventListener("click", function () {
-	            checkWord();
-	            updateTries();
+	            if(isRealWord()){
+			    checkWord();
+			    updateTries();
+		    }else{
+			    window.alert("Not a valid word")
+		    }
 	        });
 	
 	        resetTriesBtn.addEventListener("click", function () {
@@ -262,11 +266,14 @@
 				guessIndex++;
 				if (!isCorrect) {
 					// If the word is incorrect, add a new guess location
-					addNewGuessLocation();
+					if(tries != 1){
+						addNewGuessLocation();
+					}
 				} else {
 					//if word is correct, increase wins by 1
 					gamesWon++;
 					updateWins();
+					window.alert("You Won!")
 				}
 			} 
 		}
